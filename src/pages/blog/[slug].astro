@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { client, urlFor } from '../../lib/sanity';
+import { PortableText } from 'astro-portabletext';
+
+export async function getStaticPaths() {
+  const query = `*[_type == "parentingContent"]`;
+  let articles = [];
+  try {
+     articles = await client.fetch(query);
+  } catch (e) {
+    console.error("Sanity path fetch error:", e);
+    // Return empty array or mock paths if needed for dev structure
+    return [
+      { params: { slug: 'education-fund-planning' }, props: { article: {
+          title: 'Planning for Your Child\'s Education Fund',
+          mainImage: null,
+          body: [],
+          publishedAt: new Date().toISOString(),
+          categories: ['Education']
+        } 
+      }},
+    ]; 
+  }
+
+  // If no articles, return a mock path to prevent build failure on empty dataset
+  if (articles.length === 0) {
+      return [
+      { params: { slug: 'education-fund-planning' }, props: { article: {
+          title: 'Planning for Your Child\'s Education Fund',
+          mainImage: null,
+          body: [], // Mock empty body
+          publishedAt: new Date().toISOString(),
+          categories: ['Education']
+        } 
+      }},
+    ]; 
+  }
+
+  return articles.map((article: any) => ({
+    params: { slug: article.slug.current },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+---
+
+<Layout title={`${article.title} - WiseAdvisor`}>
+  <div class="bg-gray-50 min-h-screen pb-20">
+    <!-- Header / Hero -->
+    <div class="bg-navy-900 text-white py-16 lg:py-24 relative overflow-hidden">
+        {article.mainImage && (
+             <div class="absolute inset-0 z-0 opacity-20">
+                <img
+                  src={urlFor(article.mainImage).width(1200).url()}
+                  alt={article.title}
+                  class="w-full h-full object-cover"
+                />
+             </div>
+        )}
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-4xl">
+         {article.categories && article.categories.length > 0 && (
+            <span class="bg-royal-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">
+              {article.categories[0]}
+            </span>
+          )}
+        <h1 class="text-3xl md:text-5xl font-serif font-bold mb-6 leading-tight">
+          {article.title}
+        </h1>
+        <div class="text-gray-300 text-sm">
+          Published on {new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <article class="container mx-auto px-4 sm:px-6 lg:px-8 mt-[-3rem] relative z-20">
+      <div class="bg-white rounded-xl shadow-lg p-8 md:p-12 max-w-4xl mx-auto prose prose-navy lg:prose-lg">
+         {article.body ? (
+             <PortableText value={article.body} />
+         ) : (
+             <p class="text-gray-500 italic">Content pending...</p>
+         )}
+      </div>
+    </article>
+      
+    <div class="text-center mt-12">
+        <a href="/blog" class="text-royal-600 hover:text-royal-800 font-semibold inline-flex items-center">
+            &larr; Back to Articles
+        </a>
+    </div>
+  </div>
+</Layout>

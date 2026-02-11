@@ -1,0 +1,61 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-navy-900 text-white pt-12 pb-8 border-t border-navy-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Brand -->
+      <div class="col-span-1 md:col-span-1">
+        <a href="/" class="text-2xl font-serif font-bold text-white tracking-wide block mb-4">
+          WiseAdvisor
+        </a>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Smart Planning, Secure Legacy. Holistic financial and insurance advice for your family's future.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-serif font-semibold text-white mb-4">Services</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Family Protection</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Health Insurance</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Retirement Planning</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Education Funds</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div>
+        <h3 class="text-lg font-serif font-semibold text-white mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li><a href="/blog" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Blog & Insights</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Health Tracker</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">Policy Comparison</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-lg font-serif font-semibold text-white mb-4">Contact</h3>
+        <ul class="space-y-2">
+          <li class="text-gray-400 text-sm">Bangkok, Thailand</li>
+          <li><a href="mailto:contact@wiseadvisor.com" class="text-gray-400 hover:text-royal-400 transition-colors text-sm">contact@wiseadvisor.com</a></li>
+          <li class="text-gray-400 text-sm">+66 2 123 4567</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-navy-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-500 text-xs">
+        &copy; {currentYear} WiseAdvisor. All rights reserved.
+      </p>
+      <div class="flex space-x-6 mt-4 md:mt-0">
+        <a href="#" class="text-gray-500 hover:text-white text-xs">Privacy Policy</a>
+        <a href="#" class="text-gray-500 hover:text-white text-xs">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'Unknown project',
 
-  projectId: 'WiseAdvisor',
+  projectId: 'rocd6qow',
   dataset: 'production',
 
   plugins: [

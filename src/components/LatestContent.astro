@@ -1,0 +1,130 @@
+---
+import { client, urlFor } from '../lib/sanity';
+
+// Type definition for Article
+interface Article {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  mainImage: any;
+  excerpt: string;
+  publishedAt: string;
+  categories: string[];
+}
+
+// Fetch latest articles (parentingContent for now)
+const query = `*[_type == "parentingContent"] | order(publishedAt desc)[0...3]`;
+let articles: Article[] = [];
+let error = false;
+
+try {
+  articles = await client.fetch(query);
+} catch (e) {
+  console.error("Sanity fetch error:", e);
+  error = true;
+}
+
+// Mock data if no articles found or error (for development/preview)
+if (articles.length === 0) {
+  articles = [
+    {
+      _id: '1',
+      title: 'Planning for Your Child\'s Education Fund',
+      slug: { current: 'education-fund-planning' },
+      mainImage: null,
+      excerpt: 'Start early to ensure your children have the resources they need for their future education.',
+      publishedAt: new Date().toISOString(),
+      categories: ['Education', 'Finance'],
+    },
+     {
+      _id: '2',
+      title: 'The Importance of Positive Parenting',
+      slug: { current: 'positive-parenting' },
+      mainImage: null,
+      excerpt: 'How building a strong emotional bond with your child contributes to their long-term success.',
+      publishedAt: new Date().toISOString(),
+      categories: ['Parenting', 'Wellness'],
+    },
+     {
+      _id: '3',
+      title: 'Health Insurance for Growing Families',
+      slug: { current: 'health-insurance-families' },
+      mainImage: null,
+      excerpt: 'Choosing the right coverage to protect your family from unexpected medical costs.',
+      publishedAt: new Date().toISOString(),
+      categories: ['Health', 'Insurance'],
+    },
+  ];
+}
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-end mb-12">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-navy-900 mb-2">
+          Latest Insights
+        </h2>
+        <p class="text-gray-600">Expert advice on parenting, health, and wealth.</p>
+      </div>
+      <a href="/blog" class="hidden md:flex items-center text-royal-600 font-semibold hover:text-royal-700 transition-colors">
+        View all articles
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L15.586 11H3a1 1 0 110-2h12.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {articles.map((article) => (
+        <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group border border-gray-100 h-full flex flex-col">
+          <div class="h-48 overflow-hidden bg-gray-200 relative">
+            {article.mainImage ? (
+              <img
+                src={urlFor(article.mainImage).width(600).height(400).url()}
+                alt={article.title}
+                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+              />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-100">
+                <span class="text-sm">No Image</span>
+              </div>
+            )}
+            {article.categories && article.categories.length > 0 && (
+              <div class="absolute top-4 left-4">
+                <span class="bg-white/90 backdrop-blur-sm text-navy-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                  {article.categories[0]}
+                </span>
+              </div>
+            )}
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <div class="text-gray-500 text-xs mb-3">
+              {new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </div>
+            <h3 class="text-xl font-serif font-bold text-navy-900 mb-3 group-hover:text-royal-600 transition-colors">
+              <a href={`/blog/${article.slug.current}`}>
+                {article.title}
+              </a>
+            </h3>
+            <p class="text-gray-600 text-sm line-clamp-3 mb-4 flex-grow">
+              {article.excerpt || 'Read more to discover expert insights...'}
+            </p>
+            <a href={`/blog/${article.slug.current}`} class="text-royal-600 text-sm font-semibold hover:underline inline-flex items-center mt-auto">
+              Read Article
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-8 text-center md:hidden">
+      <a href="/blog" class="inline-flex items-center text-royal-600 font-semibold hover:text-royal-700 transition-colors">
+        View all articles
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L15.586 11H3a1 1 0 110-2h12.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
