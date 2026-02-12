@@ -1,4 +1,8 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section class="relative bg-navy-900 text-white overflow-hidden">
@@ -15,24 +19,23 @@
   <div class="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
     <div class="max-w-3xl">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
-        Smart Planning, <br />
-        <span class="text-royal-400">Secure Legacy.</span>
+        {t('hero.title')}
       </h1>
       <p class="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
-        Holistic financial advice, health insurance solutions, and education planning tailored for your family's future. We help you build wealth and well-being together.
+        {t('hero.subtitle')}
       </p>
       <div class="flex flex-col sm:flex-row gap-4">
         <a
-          href="/contact"
+          href={lang === 'th' ? '/contact' : `/${lang}/contact`}
           class="inline-flex justify-center items-center bg-gold-500 hover:bg-gold-600 text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-all transform hover:-translate-y-0.5"
         >
-          Get Started Today
+          {t('hero.cta.start')}
         </a>
         <a
-          href="/#services"
+          href={lang === 'th' ? '/#services' : `/${lang}/#services`}
           class="inline-flex justify-center items-center bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white font-semibold px-8 py-3 rounded-lg transition-all"
         >
-          Explore Services
+          {t('hero.cta.services')}
         </a>
       </div>
     </div>

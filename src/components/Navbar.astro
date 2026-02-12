@@ -1,9 +1,15 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import LanguagePicker from './LanguagePicker.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const navItems = [
-  { name: 'Services', href: '/#services' },
-  { name: 'About', href: '/#about' },
-  { name: 'Resources', href: '/blog' },
-  { name: 'Contact', href: '/#contact' },
+  { name: t('nav.services'), href: lang === 'th' ? '/#services' : `/${lang}/#services` },
+  { name: t('nav.about'), href: lang === 'th' ? '/#about' : `/${lang}/#about` },
+  { name: t('nav.insights'), href: lang === 'th' ? '/blog' : `/${lang}/blog` },
+  { name: t('nav.contact'), href: lang === 'th' ? '/contact' : `/${lang}/contact` },
 ];
 ---
 
@@ -12,14 +18,14 @@ const navItems = [
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
       <div class="flex-shrink-0 flex items-center">
-        <a href="/" class="text-2xl font-serif font-bold text-white tracking-wide">
+        <a href={lang === 'th' ? '/' : `/${lang}`} class="text-2xl font-serif font-bold text-white tracking-wide">
           WiseAdvisor
         </a>
       </div>
 
       <!-- Desktop Menu -->
       <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8">
+        <div class="ml-10 flex items-center space-x-6">
           {navItems.map((item) => (
             <a
               href={item.href}
@@ -34,8 +40,12 @@ const navItems = [
             rel="noopener noreferrer"
             class="bg-royal-600 hover:bg-royal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
           >
-            Client Portal
+            {t('nav.clientPortal')}
           </a>
+          <!-- Language Switcher -->
+          <div class="ml-2">
+            <LanguagePicker currentLang={lang} />
+          </div>
         </div>
       </div>
 

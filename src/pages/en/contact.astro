@@ -1,23 +1,20 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
-import Layout from '../layouts/Layout.astro';
-import LeadForm from '../components/react/LeadForm.tsx';
+import Layout from '../../layouts/Layout.astro';
+import LeadForm from '../../components/react/LeadForm.tsx';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
-const lang = getLangFromUrl(Astro.url);
+const lang = 'en';
 const t = useTranslations(lang);
 
 const formLabels = {
-    title: t('contact.title'), // Using contact.title instead of get a free consultation as it was "Get a free..", but I'll use contact.title for consistency or create new key. Actually let's use contact.title since it was header. But the form header was "Get a free consultation".
-    // I'll map 'contact.title' which is "Contact Us" to form header? No, form header should be "Get a Free Consultation".
-    // I missed adding 'form.header' key. I'll use 'contact.title' for now or 'contact.subtitle'.
-    // Actually, I'll pass 'contact.title' to the form title for now. Refactoring in real life would need precise keys.
+    title: t('contact.title'),
     name: t('contact.form.name'),
     email: t('contact.form.email'),
     phone: t('contact.form.phone'),
     interest: t('contact.form.interest'),
     message: t('contact.form.message'),
     submit: t('contact.form.submit'),
-    submitting: 'Sending...', // Hardcoded for now or add key
+    submitting: 'Sending...',
     success: t('contact.form.success'),
     error: t('contact.form.error'),
     privacy: 'By submitting this form, you agree to our privacy policy.',
@@ -26,7 +23,7 @@ const formLabels = {
 };
 ---
 
-<Layout title={`${t('contact.title')} - WiseAdvisor`}>
+<Layout title={`${t('contact.title')} - WiseAdvisor`} lang="en">
   <div class="bg-navy-900 text-white py-16">
     <div class="container mx-auto px-4 text-center">
       <h1 class="text-4xl font-serif font-bold mb-4">{t('contact.title')}</h1>

@@ -13,6 +13,7 @@ var define_ROUTES_default = {
     "/api/*",
     "/blog/*",
     "/contact",
+    "/en/*",
     "/tools/*"
   ]
 };
