@@ -5,7 +5,7 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "wiseadvisor-db"
-database_id = "to-be-replaced-by-user" # User needs to run `npx wrangler d1 create wiseadvisor-db` and paste the ID here
+database_id = "7fd18a83-0c55-4d29-9db2-b729c9582178"
 
 [vars]
 # RESEND_API_KEY = "re_..." # Set in Cloudflare Dashboard for production
